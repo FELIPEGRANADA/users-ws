@@ -6,29 +6,34 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.users.entities.User;
+import com.example.users.models.UsersDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 
-// Class implements business logic on  users
+// Class implements business logic on users
 @Service
 public class UsersService 
 {
 	// Users List
 	private List<User> usersList;
+	// Instance DAO Users
+	UsersDAO usersDAO;
 	
 	// Class constructor
 	public UsersService()
 	{
 		// Initialize the users list
 		this.usersList = new ArrayList<User>();
+		// Create instance DAO Users
+		this.usersDAO = new UsersDAO();
 	}
 	
 	// Create an user
 	public User createUser(User newUser)
-	{
+	{				
 		// Create identifier for the user
 		int id = (int)Math.floor(Math.random()*100);
 		// Create a new user to add to the list
@@ -39,6 +44,8 @@ public class UsersService
 				            newUser.getName(),
 				            newUser.getPhone());
 		
+		// Add the user to DataBase
+		this.usersDAO.createUser(user);
 		// Add the user to the list
 		this.usersList.add(user);
 		// Return the user
@@ -73,17 +80,8 @@ public class UsersService
 	// Get user by identifier
 	public User getUser(Integer id)
 	{
-		// Create an user -1 for when it isn't in the list
-		User searchUser = new User();
-		// Index: User's position in the list
-		int index = this.getUserById(id.intValue());
-		// If the user is in the list execute the action
-		if(index != -1)
-		{
-			searchUser = this.usersList.get(index);
-		}
-		
-		return searchUser;
+		// Get User from DataBase
+		return this.usersDAO.getUser(id.intValue());
 	}
 	
 	// Update all information of an user
@@ -96,7 +94,7 @@ public class UsersService
 		this.usersList.get(index).setPhone(updateUser.getPhone());
 	}
 	
-	// Update all information of an use
+	// Update all information of an user
 	public User updateAllInfoUser(User updateUser, Integer id)
 	{
 		// Create an user -1 for when it isn't in the list

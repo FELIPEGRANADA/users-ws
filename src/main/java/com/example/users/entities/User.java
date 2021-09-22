@@ -1,22 +1,22 @@
 package com.example.users.entities;
 
-// Clase que representa el usuario
+// Class Entity User
 public class User 
 {
-	// Identificador del usuario
+	// User identifier
 	private int id;
-	// Login del usuario
+	// User login
 	private String username;
-	// Contraseña del usuario
+	// User password
 	private String password;
-	// Email del usuario
+	// User email
 	private String email;
-	// Nombre del usuario
+	// User name
 	private String name;
-	// Telefóno del usuario
+	// User phone
 	private String phone;
 	
-	// Constructores de la clase
+	// Class constructor
 	public User()
 	{
 		this.id = -1;
@@ -37,7 +37,7 @@ public class User
 		this.phone = phone;
 	}
 	
-	// Métodos de acceso y obtención de datos
+	// Set and Get Methods
 	public int getId() {
 		return id;
 	}

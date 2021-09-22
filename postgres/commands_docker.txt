@@ -1,0 +1,8 @@
+docker run 
+--name postgres 
+-d 
+-v ./postgres_data:/var/lib/PostgreSQL/data 
+-p 5432:5432 
+-e POSTGRES_PASSWORD=Root postgres:latest
+
+docker-compose up -d
